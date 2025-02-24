@@ -17,17 +17,17 @@ public class RecruiterProfile {
     private String firstName;
     private String lastName;
     private String city;
+
     private String state;
+
     private String country;
+
     private String company;
+
     @Column(nullable = true, length = 64)
     private String profilePhoto;
 
     public RecruiterProfile() {
-    }
-
-    public RecruiterProfile(Users users) {
-        this.userId = users;
     }
 
     public RecruiterProfile(int userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String company, String profilePhoto) {
@@ -40,6 +40,10 @@ public class RecruiterProfile {
         this.country = country;
         this.company = company;
         this.profilePhoto = profilePhoto;
+    }
+
+    public RecruiterProfile(Users users) {
+        this.userId = users;
     }
 
     public int getUserAccountId() {
@@ -112,6 +116,12 @@ public class RecruiterProfile {
 
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (profilePhoto == null) return null;
+        return "/photos/recruiter/" + userAccountId + "/" + profilePhoto;
     }
 
     @Override
