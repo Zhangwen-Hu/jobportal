@@ -13,7 +13,6 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -21,7 +20,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         System.out.println("The username " + username + " is logged in.");
         boolean hasJobSeekerRole = authentication.getAuthorities().stream().anyMatch(r->r.getAuthority().equals("Job Seeker"));
         boolean hasRecruiterRole = authentication.getAuthorities().stream().anyMatch(r->r.getAuthority().equals("Recruiter"));
-        if (hasJobSeekerRole || hasRecruiterRole) {
+
+        if (hasRecruiterRole || hasJobSeekerRole) {
             response.sendRedirect("/dashboard/");
         }
     }
